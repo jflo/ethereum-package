@@ -14,6 +14,7 @@ WS_PORT_NUM = 8546
 DISCOVERY_PORT_NUM = 30303
 ENGINE_HTTP_RPC_PORT_NUM = 8551
 METRICS_PORT_NUM = 9001
+DEBUG_JVM_PORT_NUM = 5005
 
 # The min/max CPU/memory that the execution node can use
 EXECUTION_MIN_CPU = 100
@@ -24,11 +25,12 @@ EXECUTION_MAX_MEMORY = 2048
 # Port IDs
 RPC_PORT_ID = "rpc"
 WS_PORT_ID = "ws"
+DEBUG_JVM_PORT_ID = "debug"
 TCP_DISCOVERY_PORT_ID = "tcp-discovery"
 UDP_DISCOVERY_PORT_ID = "udp-discovery"
 ENGINE_HTTP_RPC_PORT_ID = "engine-rpc"
 METRICS_PORT_ID = "metrics"
-JAVA_OPTS = {"JAVA_OPTS": "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n"}
+JAVA_OPTS = {"JAVA_OPTS": "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005"}
 
 
 def get_used_ports(discovery_port=DISCOVERY_PORT_NUM):
@@ -51,6 +53,9 @@ def get_used_ports(discovery_port=DISCOVERY_PORT_NUM):
         METRICS_PORT_ID: shared_utils.new_port_spec(
             METRICS_PORT_NUM, shared_utils.TCP_PROTOCOL
         ),
+	DEBUG_JVM_PORT_ID: shared_utils.new_port_spec(
+	    DEBUG_JVM_PORT_NUM, shared_utils.TCP_PROTOCOL
+	),
     }
     return used_ports
 
